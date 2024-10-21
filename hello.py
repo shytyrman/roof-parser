@@ -1,5 +1,5 @@
 def main():
-    print("Hello from roof-parser!")
+    print("Hello in roof-parser!")
 
 
 if __name__ == "__main__":
