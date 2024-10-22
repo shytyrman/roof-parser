@@ -1,7 +1,12 @@
 [project]
 name = "roof-parser"
 version = "0.1.0"
-description = "Add your description here"
+description = "Just a parser that parses details from 'krysha.kz'"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.9"
+dependencies = [
+    "psycopg2>=2.9.10",
+    "psycopg2-binary>=2.9.10",
+    "sqlalchemy>=2.0.36",
+    "python-dotenv>=1.0.1",
+]
