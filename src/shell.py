@@ -1,4 +1,5 @@
 import click
+from parser_1 import parse_krisha
 
 @click.group()
 def cli():
@@ -15,6 +16,12 @@ def hello():
 def greet(name):
     """Greet a person."""
     click.echo(f"Hello, {name}!")
+    
+# @cli.command()
+# @click.argument('url')
+# @click.argument('max_page')
+# def parse(url, max_page):
+#     parse_krisha(url, max_page)
 
 def run_shell():
     while True:
