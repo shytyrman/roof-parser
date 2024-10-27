@@ -37,7 +37,7 @@ def run_shell():
             pass
         except click.ClickException as e:
             # Catch SystemExit to prevent the shell from closing on errors
-            click.echo(e);
+            click.echo(e)
 
 if __name__ == "__main__":
     run_shell()
