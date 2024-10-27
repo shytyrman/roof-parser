@@ -1,7 +1,7 @@
 [project]
 name = "roof-parser"
 version = "0.1.0-alpha.1"
-description = "Just a parser that parses details from 'krysha.kz'"
+description = "Just a parser that parses details from 'krisha.kz'"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
