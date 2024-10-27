@@ -9,11 +9,10 @@ import requests
 
 
 def parse_krisha(url, max_page):
-    res_file = f'data/{datetime.now()}.csv'
+    res_file = f'data_{datetime.date(datetime.now())}.csv'
     with open(res_file, "w", encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow((
-            'id',
             'Ссылка',
             'Комнаты',
             'Кв. метры'
@@ -43,7 +42,6 @@ def parse_krisha(url, max_page):
             adress_hot = flat.find('div', class_='a-card__subtitle tm-click-checked-hot-adv')
             adress_common = flat.find('div', class_='a-card__subtitle')
             adress = adress_hot.text.strip() if adress_hot else adress_common.text.strip()
-            id = flat.find('a', class_='a-action a-action-note').get('data-a-id')
             description = description.split(', ')
             rooms = description[0]
             m_2 = Decimal(description[1].rstrip(' м²'))
@@ -52,7 +50,6 @@ def parse_krisha(url, max_page):
             with open(res_file, "a", encoding='utf-8') as file:
                 writer = csv.writer(file)
                 writer.writerow((
-                    id,
                     f'krisha.kz{link}',
                     rooms,
                     m_2,
@@ -64,6 +61,6 @@ def parse_krisha(url, max_page):
         sleep(5)
 
 url = 'https://krisha.kz/prodazha/kvartiry/astana/?page='
-max_page = 1000
+max_page = 1
 
 parse_krisha(url, max_page)
