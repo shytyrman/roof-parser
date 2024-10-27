@@ -12,3 +12,6 @@ venv
 
 # Environment variables
 .env
+
+#Block all CSV files
+*.csv
