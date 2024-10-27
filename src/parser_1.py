@@ -60,7 +60,7 @@ def parse_krisha(url, max_page):
         print(f'Обработана {i} страница из {max_page}')
         sleep(5)
 
-url = 'https://krisha.kz/prodazha/kvartiry/astana/?page='
-max_page = 1
+# url = 'https://krisha.kz/prodazha/kvartiry/astana/?page='
+# max_page = 10
 
-parse_krisha(url, max_page)
+# parse_krisha(url, max_page)
