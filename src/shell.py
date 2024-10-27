@@ -20,8 +20,9 @@ def greet(name):
 @cli.command()
 @click.argument('url')
 @click.argument('max_page', default=1)
-def parse(url, max_page):
-    parse_krisha(f'{url}', max_page)
+@click.argument('sleep_time', default=1)
+def parse(url, max_page, sleep_time):
+    parse_krisha(f'{url}', max_page, sleep_time)
 
 def run_shell():
     while True:
@@ -35,7 +36,7 @@ def run_shell():
         except (KeyboardInterrupt, EOFError):
             # break
             pass
-        except click.ClickException as e:
+        except Exception as e:
             # Catch SystemExit to prevent the shell from closing on errors
             click.echo(e)
 
