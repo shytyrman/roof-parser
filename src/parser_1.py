@@ -8,7 +8,7 @@ import requests
 
 
 
-def parse_krisha(url, max_page):
+def parse_krisha(url, max_page, sleep_time):
     res_file = f'data_{datetime.date(datetime.now())}.csv'
     with open(res_file, "w", encoding='utf-8') as file:
         writer = csv.writer(file)
@@ -58,7 +58,7 @@ def parse_krisha(url, max_page):
                     price_for_m_2)
                 )
         print(f'Обработана {i} страница из {max_page}')
-        sleep(5)
+        sleep(sleep_time)
 
 # url = 'https://krisha.kz/prodazha/kvartiry/astana/?page='
 # max_page = 10
