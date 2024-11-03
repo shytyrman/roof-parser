@@ -6,7 +6,11 @@ from time import sleep
 from bs4 import BeautifulSoup
 import requests
 
-
+cities = ("almaty", "astana", 'shymkent', 'abay-oblast', 'akmolinskaja-oblast', 'aktjubinskaja-oblast',
+        'almatinskaja-oblast', 'atyrauskaja-oblast', 'vostochno-kazahstanskaja-oblast', 'zhambylskaja-oblast',
+        'jetisyskaya-oblast', 'jetisyskaya-oblast', 'karagandinskaja-oblast', 'kostanajskaja-oblast',
+        'kyzylordinskaja-oblast', 'mangistauskaja-oblast', 'pavlodarskaja-oblast', 'severo-kazahstanskaja-oblast',
+        'juzhno-kazahstanskaja-oblast', 'ulitayskay-oblast')
 
 def parse_krisha(url, max_page, sleep_time):
     res_file = f'data_{datetime.date(datetime.now())}.csv'
@@ -31,6 +35,68 @@ def parse_krisha(url, max_page, sleep_time):
             continue    
         soup = BeautifulSoup(page.text, 'html.parser')
         all_flats = soup.findAll('div', class_='a-card__header')
+
+        if not all_flats:
+            print("No results found.")
+            break
+            
+        for flat in all_flats:
+            link_hot = flat.find('a', class_='a-card__title tm-click-checked-hot-adv')
+            link_common = flat.find('a', class_='a-card__title')
+            link = link_hot.get('href') if link_hot else link_common.get('href')
+            description = link_hot.text if link_hot else link_common.text
+            price = flat.find('div', class_='a-card__price').text.strip() 
+            price_int = ''.join([x for x in price if x.isdigit()])
+            adress_hot = flat.find('div', class_='a-card__subtitle tm-click-checked-hot-adv')
+            adress_common = flat.find('div', class_='a-card__subtitle')
+            adress = adress_hot.text.strip() if adress_hot else adress_common.text.strip()
+            description = description.split(', ')
+            rooms = description[0]
+            m_2 = Decimal(description[1].rstrip(' м²'))
+            price_for_m_2 = Decimal(int(price_int) / m_2).quantize(Decimal('0.00'))
+
+            with open(res_file, "a", encoding='utf-8') as file:
+                writer = csv.writer(file)
+                writer.writerow((
+                    f'krisha.kz{link}',
+                    rooms,
+                    m_2,
+                    adress,
+                    price,
+                    price_for_m_2)
+                )
+        print(f'Обработана {i} страница из {max_page}')
+        sleep(sleep_time)
+
+
+def parse_apartment_in_city(city, max_page, sleep_time):
+    url = f'https://krisha.kz/prodazha/kvartiry/{city}/?page='
+    res_file = f'data_{datetime.date(datetime.now())}_{city}.csv'
+    with open(res_file, "w", encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow((
+            'Ссылка',
+            'Комнаты',
+            'Кв. метры'
+            'Адрес',
+            'Цена',
+            'Цена за кв.м')
+            )    
+    
+    page = requests.get(url)
+
+    for i in range(1, max_page+1):
+        current_url = url+str(i)
+        page = requests.get(current_url)
+        if page.status_code != 200:
+            print(f'Сервер ответил ошибкой, код - {page.status_code}')
+            continue    
+        soup = BeautifulSoup(page.text, 'html.parser')
+        all_flats = soup.findAll('div', class_='a-card__header')
+
+        if not all_flats:
+            print("No results found.")
+            break
 
         for flat in all_flats:
             link_hot = flat.find('a', class_='a-card__title tm-click-checked-hot-adv')

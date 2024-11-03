@@ -1,5 +1,7 @@
 import click
 from parser_1 import parse_krisha
+from parser_1 import parse_apartment_in_city
+from parser_1 import cities
 
 @click.group()
 def cli():
@@ -23,6 +25,20 @@ def greet(name):
 @click.argument('sleep_time', default=1)
 def parse(url, max_page, sleep_time):
     parse_krisha(f'{url}', max_page, sleep_time)
+
+@cli.command()
+@click.argument('city')
+@click.argument('max_page', default=1)
+@click.argument('sleep_time', default=1)
+def parse_city(city, max_page, sleep_time):
+    parse_apartment_in_city(f'{city}', max_page, sleep_time)
+
+@cli.command()
+@click.argument('max_page', default=5000)
+@click.argument('sleep_time', default=1)
+def parse_all(max_page, sleep_time):
+    for city in cities:
+        parse_apartment_in_city(f'{city}', max_page, sleep_time)
 
 def run_shell():
     while True:
