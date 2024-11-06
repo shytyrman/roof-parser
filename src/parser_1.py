@@ -6,9 +6,14 @@ from time import sleep
 from bs4 import BeautifulSoup
 import requests
 
-cities = ("almaty", "astana", 'shymkent', 'abay-oblast', 'akmolinskaja-oblast', 'aktjubinskaja-oblast',
-        'almatinskaja-oblast', 'atyrauskaja-oblast', 'vostochno-kazahstanskaja-oblast', 'zhambylskaja-oblast',
-        'jetisyskaya-oblast', 'jetisyskaya-oblast', 'karagandinskaja-oblast', 'kostanajskaja-oblast',
+# cities = ("almaty", "astana", 'shymkent', 'abay-oblast', 'akmolinskaja-oblast', 'aktjubinskaja-oblast',
+#         'almatinskaja-oblast', 'atyrauskaja-oblast', 'vostochno-kazahstanskaja-oblast', 'zhambylskaja-oblast',
+#         'jetisyskaya-oblast', 'jetisyskaya-oblast', 'karagandinskaja-oblast', 'kostanajskaja-oblast',
+#         'kyzylordinskaja-oblast', 'mangistauskaja-oblast', 'pavlodarskaja-oblast', 'severo-kazahstanskaja-oblast',
+#         'juzhno-kazahstanskaja-oblast', 'ulitayskay-oblast')
+
+
+cities = ('karagandinskaja-oblast', 'kostanajskaja-oblast',
         'kyzylordinskaja-oblast', 'mangistauskaja-oblast', 'pavlodarskaja-oblast', 'severo-kazahstanskaja-oblast',
         'juzhno-kazahstanskaja-oblast', 'ulitayskay-oblast')
 
@@ -19,7 +24,7 @@ def parse_krisha(url, max_page, sleep_time):
         writer.writerow((
             'Ссылка',
             'Комнаты',
-            'Кв. метры'
+            'Кв. метры',
             'Адрес',
             'Цена',
             'Цена за кв.м')
@@ -77,7 +82,7 @@ def parse_apartment_in_city(city, max_page, sleep_time):
         writer.writerow((
             'Ссылка',
             'Комнаты',
-            'Кв. метры'
+            'Кв. метры',
             'Адрес',
             'Цена',
             'Цена за кв.м')
